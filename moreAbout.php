@@ -5,9 +5,9 @@
         echo 'Id Not Found';
         exit;
     }
-    require "users.php";
+    require "userData/users.php";
     $user = getUserById($userId);
-    
+
     if (!$user) {
         echo 'Id Not Found';
         exit;
@@ -30,6 +30,14 @@
     </style>
 </head>
 <body>
+    <h1><?php echo "Hey, I am ",$user['name'] ?></h1>
+    <div>
+        <a href="update.php?id=<?php echo $user['uuid'] ?>">UPDATE</a>
+        <form action="delete.php" method="POST">
+            <input type="hidden" name="uuid" value="<?php echo $user['uuid'] ?>">
+            <button>DELETE</button>
+        </form>
+    </div>
     <table>
         <tr>
             <th>Name: </th>

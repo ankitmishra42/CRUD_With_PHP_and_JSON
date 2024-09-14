@@ -1,7 +1,7 @@
 <?php
     $userId = $_GET['id'];
 
-    require "users.php";
+    require "userData/users.php";
     $user = getUserById($userId);
     if (!isset($_GET["id"])) {
         echo 'Id Not Found';
@@ -15,16 +15,25 @@
     // echo '<pre>';
     // var_dump($_SERVER['REQUEST_METHOD'])
     if ($_SERVER['REQUEST_METHOD']==='POST') {
-        // $result = updateUser($_POST, $userId);
+        
+        // Check if a file has been uploaded
         if (isset($_FILES['picture'])& $_FILES['picture']['error'] === UPLOAD_ERR_OK) {
-            echo'<pre>';
-            var_dump($_FILES);
+            // echo'<pre>';
+            // var_dump($_FILES);
+            
+            // var_dump($_POST);
+
+            //uploading photos
+            $DATA = uploadPicture($_POST);
+            echo "File uploaded and metadata successfully saved to $filePath";
         }
-        // if ($result) {
-        //     header('location: index.php');
-        // }else{
-        //     echo 'Your Info have Not updated! Try again';
-        // }
+
+        $result = updateUser($DATA, $userId);
+        if ($result) {
+            header('location: ./index.php');
+        }else{
+            echo 'Your Info have Not updated! Try again';
+        }
     }
     
 ?>

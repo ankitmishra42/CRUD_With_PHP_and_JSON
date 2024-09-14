@@ -1,5 +1,5 @@
 <?php
-    require 'users.php';
+    require 'userData/users.php';
     $users = getUser();
     if (isset($users)):
 ?>
@@ -13,6 +13,9 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div>
+        <a href="newUser.php">Create New User</a>
+    </div>
     <table>
         <thead>
             <tr>
@@ -37,7 +40,10 @@
                 <td>
                     <a target="blank" href="moreAbout.php?id=<?php echo $user['uuid'] ?>">MoreAbout</a>
                     <a href="update.php?id=<?php echo $user['uuid'] ?>">UPDATE</a>
-                    <a href="delete.php?id=<?php echo $user['uuid'] ?>">DELETE</a>
+                    <form action="delete.php" method="POST">
+                        <input type="hidden" name="uuid" value="<?php echo $user['uuid'] ?>">
+                        <button>DELETE</button>
+                    </form>
                 </td>
             </tr>
             <?php endforeach ?>
